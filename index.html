@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="My Eskulas membantu siswa SMKN 12 Surabaya menemukan ekstrakurikuler terbaik berdasarkan minat, jadwal, dan tujuan pribadi." />
+    <title>My Eskulas | Pilih Eskul Favoritmu di SMKN 12 Surabaya</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style/style.css" />
+  </head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-brand">
+        <img src="logo smkn 12.png" alt="Logo SMKN 12 Surabaya" />
+        <div>
+          <strong>My Eskulas</strong>
+          <span>SMKN 12 Surabaya</span>
+        </div>
+      </div>
+      <button class="nav-toggle" id="navToggle" aria-label="Buka navigasi">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="#home">Beranda</a></li>
+        <li><a href="#wizard">Tes</a></li>
+        <li><a href="#rekomendasi">Rekomendasi</a></li>
+        <li><a href="#semua">Semua Eskul</a></li>
+        <li><a href="#footer">Kontak</a></li>
+      </ul>
+      <button class="primary-btn nav-cta" data-scroll-target="#wizard">Mulai Tes</button>
+    </nav>
+    <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+      <div class="mobile-menu-inner">
+        <button class="ghost-btn close-mobile" id="closeMobile">Tutup ✕</button>
+        <ul>
+          <li><a href="#home">Beranda</a></li>
+          <li><a href="#wizard">Tes</a></li>
+          <li><a href="#rekomendasi">Rekomendasi</a></li>
+          <li><a href="#semua">Semua Eskul</a></li>
+          <li><a href="#footer">Kontak</a></li>
+        </ul>
+        <button class="primary-btn" data-scroll-target="#wizard">Mulai Tes</button>
+      </div>
+    </div>
+    <div class="mobile-backdrop" id="mobileBackdrop" aria-hidden="true"></div>
+
+    <header class="site-hero" id="home">
+      <div class="hero-content">
+        <p class="eyebrow-badge">Platform rekomendasi ekstrakurikuler SMKN 12 Surabaya</p>
+        <h1>My Eskulas</h1>
+        <p class="hero-lede">
+          Teman baru kamu dalam memilih eskul terbaik. Kami gabungkan preferensi pribadi dengan ranking prestasi
+          eskul untuk mengeluarkan <strong>rekomendasi warna-warni</strong> yang mudah dipahami siswa SMA/SMK.
+        </p>
+        <div class="hero-brand-chip">
+          <img src="logo smkn 12.png" alt="Logo SMKN 12 Surabaya" class="logo-rect" />
+          <div>
+            <p>SMKN 12 Surabaya</p>
+            <span>Inisiatif resmi siswa Rolas</span>
+          </div>
+        </div>
+        <div class="hero-actions">
+          <button class="primary-btn" data-scroll-target="#wizard">Mulai Pilih Eskul</button>
+          <a class="ghost-btn" href="#semua">Lihat Semua Eskul</a>
+          <button class="ghost-btn" id="themeToggle" type="button">Mode Gelap</button>
+        </div>
+        <ul class="hero-highlights">
+          <li>
+            <span>🎯</span>
+            <div>
+              <p class="title">Ranking Personal</p>
+              <p>Kombinasi skor prestasi dan kecocokan minat.</p>
+            </div>
+          </li>
+          <li>
+            <span>🗓️</span>
+            <div>
+              <p class="title">Match Jadwal</p>
+              <p>Filter jadwal sore & akhir pekan otomatis.</p>
+            </div>
+          </li>
+          <li>
+            <span>🚀</span>
+            <div>
+              <p class="title">Roadmap Tujuan</p>
+              <p>Set goal pribadi dan dapatkan tips aksi.</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </header>
+
+    <section class="about-section" id="about">
+      <div class="section-heading">
+        <p class="eyebrow-badge">Tentang SMKN 12 Surabaya</p>
+        <h2>Mengapa SMKN 12 Surabaya?</h2>
+      </div>
+      <div class="about-grid">
+        <article class="about-copy">
+          <p>
+            SMKN 12 Surabaya adalah sekolah vokasi di bidang seni, kriya, dan teknologi yang menjadi salah satu pusat
+            pendidikan kreatif terbesar di Jawa Timur. Pembelajaran di sini berfokus pada pengalaman kolaboratif,
+            proyek nyata, serta pendampingan intensif oleh praktisi industri.
+          </p>
+          <p>
+            Kami percaya setiap siswa memiliki jalur kreatif unik yang perlu difasilitasi agar siap berkarya dan
+            berkontribusi di industri kreatif nasional maupun global.
+          </p>
+        </article>
+        <div class="about-video">
+          <iframe
+            width="560"
+            height="315"
+            src="https://www.youtube.com/embed/VXJmqaDhywQ?si=BvFLED093qjFRpmN"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+          ></iframe>
+        </div>
+      </div>
+    </section>
+
+    <main>
+      <section class="quiz-section" id="wizard">
+        <div class="section-heading">
+          <p class="eyebrow-badge">Form evaluasi 50 pernyataan</p>
+          <h2>Jawab & biarkan ranking berbicara</h2>
+          <p>Isi 50 pernyataan gaya Likert (1-5). Semakin detail jawabanmu, semakin presisi rekomendasi eskulnya.</p>
+        </div>
+        <div class="quiz-layout">
+          <div class="quiz-card" aria-live="polite">
+            <div class="tip-banner">
+              <div>
+                <p class="tip-title">Tips isi 50 pernyataan</p>
+                <ul>
+                  <li>Jawab jujur berdasarkan pengalamanmu selama ini.</li>
+                  <li>Gunakan skala 1-5 (1 = sangat tidak setuju, 5 = sangat setuju).</li>
+                  <li>Boleh jeda. Jawaban tersimpan di browser sampai kamu reset.</li>
+                </ul>
+                <p class="microcopy">Semua perhitungan terjadi lokal. Tidak ada data yang dikirim ke server.</p>
+              </div>
+            </div>
+            <div class="quiz-progress">
+              <div class="progress-top">
+                <p id="chunkIndicator">Bagian 1 dari 5</p>
+                <p id="progressText">0/50 terjawab</p>
+              </div>
+              <div class="progress-track">
+                <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+              </div>
+            </div>
+            <div class="scale-legend">
+              <span>1 = Sangat Tidak Setuju</span>
+              <span>2 = Tidak Setuju</span>
+              <span>3 = Netral</span>
+              <span>4 = Setuju</span>
+              <span>5 = Sangat Setuju</span>
+            </div>
+            <div id="questionContainer" class="question-stack"></div>
+            <div class="quiz-controls">
+              <button type="button" class="ghost-btn" data-action="prev">Pertanyaan Sebelumnya</button>
+              <div class="control-right">
+                <button type="button" class="ghost-btn" data-action="next">Pertanyaan Selanjutnya</button>
+                <button type="button" class="primary-btn" data-action="submit">Hitung Ranking</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="recommendation-section" id="rekomendasi">
+        <div class="section-heading">
+          <p class="eyebrow-badge">Algoritme ranking ringan</p>
+          <h2>Rekomendasi versi kamu</h2>
+          <p>Skor dihitung dari jawaban 50 pernyataan + data kekuatan tiap eskul. Semakin tinggi skor, semakin cocok.</p>
+        </div>
+        <div class="recommendation-wrap">
+          <div class="recommendation-list" id="recommendationList" aria-live="polite">
+            <div class="empty-state">
+              <p>Belum ada skor 😴</p>
+              <p>Jawab semua pernyataan lalu klik “Hitung Ranking” untuk melihat rekomendasi.</p>
+            </div>
+          </div>
+          <aside class="insight-side">
+            <div class="insight-card">
+              <p class="eyebrow">Snapshot kategori</p>
+              <ul id="snapshotList">
+                <li>Pertanyaan terjawab: 0/50</li>
+                <li>Top kategori 1: —</li>
+                <li>Top kategori 2: —</li>
+                <li>Top kategori 3: —</li>
+              </ul>
+            </div>
+            <div class="insight-card chart-card">
+              <p class="eyebrow">Grafik mini</p>
+              <div class="mini-bars" id="miniBars">
+                <div><span style="width: 10%"></span><p>Leadership</p></div>
+                <div><span style="width: 10%"></span><p>Kreatif</p></div>
+                <div><span style="width: 10%"></span><p>Olahraga</p></div>
+              </div>
+              <p class="microcopy">Nilai bar = tingkat kecocokan kategori.</p>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="all-club-section" id="semua">
+        <div class="section-heading">
+          <p class="eyebrow-badge">Daftar lengkap</p>
+          <h2>Semua Ekstrakurikuler SMKN 12 Surabaya</h2>
+          <p>Kenali nama resmi, julukan, dan highlight fokus utama untuk 14 eskul populer.</p>
+        </div>
+        <div class="club-grid" id="clubGrid"></div>
+      </section>
+
+    </main>
+
+    <footer class="site-footer" id="footer">
+      <div>
+        <p class="footer-title">My Eskulas</p>
+        <p>Inisiatif siswa PPLG Rolas untuk bantu adik kelas memilih eskul di SMKN 12 Surabaya.</p>
+      </div>
+      <div>
+        <p class="footer-title">Kontak Sekolah</p>
+        <ul>
+          <li>Jl. Siwalankerto Permai 1, Surabaya</li>
+          <li>Telp (031) 8481644</li>
+          <li>Email humas@smkn12surabaya.sch.id</li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-title">Ikuti Kami</p>
+        <ul class="social-links">
+          <li><a href="#">Instagram OSIS</a></li>
+          <li><a href="#">YouTube Eskul TV</a></li>
+          <li><a href="#">TikTok Rolas Squad</a></li>
+        </ul>
+      </div>
+    </footer>
+
+    <script src="script/main.js" defer></script>
+  </body>
+</html>
