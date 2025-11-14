@@ -245,8 +245,15 @@ const CLUBS = [
   },
 ];
 
-const SCALE_LABELS = ["STS", "TS", "Netral", "S", "SS"];
+const LIKERT_SCALE = [
+  { value: 1, meaning: "Sangat Tidak Setuju" },
+  { value: 2, meaning: "Tidak Setuju" },
+  { value: 3, meaning: "Netral" },
+  { value: 4, meaning: "Setuju" },
+  { value: 5, meaning: "Sangat Setuju" },
+];
 const CHUNK_SIZE = 10;
+const TOTAL_CHUNKS = Math.ceil(QUESTION_BANK.length / CHUNK_SIZE);
 const responses = Array(QUESTION_BANK.length).fill(0);
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -256,13 +263,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const chunkIndicator = document.getElementById("chunkIndicator");
   const prevBtn = document.querySelector('[data-action="prev"]');
   const nextBtn = document.querySelector('[data-action="next"]');
-  const submitBtn = document.querySelector('[data-action="submit"]');
   const recommendationList = document.getElementById("recommendationList");
+  const recommendationPlaceholder = document.getElementById("recommendationPlaceholder");
+  const recommendationWrap = document.querySelector(".recommendation-wrap");
   const snapshotList = document.getElementById("snapshotList");
   const miniBars = document.getElementById("miniBars");
   const clubGrid = document.getElementById("clubGrid");
   const scrollCtas = document.querySelectorAll("[data-scroll-target]");
-  const themeToggle = document.getElementById("themeToggle");
+  const themeToggles = document.querySelectorAll(".theme-toggle");
   const navToggle = document.getElementById("navToggle");
   const mobileMenu = document.getElementById("mobileMenu");
   const mobileBackdrop = document.getElementById("mobileBackdrop");
@@ -274,6 +282,7 @@ document.addEventListener("DOMContentLoaded", () => {
   renderChunk();
   updateProgress();
   updateSnapshot(snapshotList);
+  toggleRecommendationVisibility(false);
 
   questionContainer?.addEventListener("click", (event) => {
     const button = event.target.closest(".scale-btn");
@@ -281,7 +290,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const index = Number(button.dataset.index);
     const value = Number(button.dataset.value);
     responses[index] = value;
-    const row = button.parentElement;
+    const row = button.closest(".likert-options");
+    if (!row) return;
     row.querySelectorAll(".scale-btn").forEach((btn) => btn.classList.remove("active"));
     button.classList.add("active");
     updateProgress();
@@ -296,13 +306,91 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   nextBtn?.addEventListener("click", () => {
-    if (currentChunk >= Math.ceil(QUESTION_BANK.length / CHUNK_SIZE) - 1) return;
+    if (currentChunk >= TOTAL_CHUNKS - 1) {
+      handleSubmit();
+      return;
+    }
     currentChunk += 1;
     renderChunk();
     updateProgress();
   });
 
-  submitBtn?.addEventListener("click", () => {
+  scrollCtas.forEach((cta) => {
+    cta.addEventListener("click", () => {
+      const target = document.querySelector(cta.dataset.scrollTarget);
+      if (target) target.scrollIntoView({ behavior: "smooth" });
+    });
+  });
+
+  initThemeToggle(themeToggles);
+  initMobileNav({
+    toggle: navToggle,
+    menu: mobileMenu,
+    backdrop: mobileBackdrop,
+    closeBtn: closeMobile,
+  });
+
+  function renderChunk() {
+    if (!questionContainer) return;
+    const start = currentChunk * CHUNK_SIZE;
+    const chunk = QUESTION_BANK.slice(start, start + CHUNK_SIZE);
+    const minLabel = LIKERT_SCALE[0].meaning;
+    const maxLabel = LIKERT_SCALE[LIKERT_SCALE.length - 1].meaning;
+    questionContainer.innerHTML = chunk
+      .map((question, index) => {
+        const overallIndex = start + index;
+        const currentValue = responses[overallIndex];
+        const buttons = LIKERT_SCALE.map(({ value, meaning }) => {
+          const isActive = currentValue === value ? "active" : "";
+          return `
+            <button
+              type="button"
+              class="scale-btn ${isActive}"
+              data-index="${overallIndex}"
+              data-value="${value}"
+              aria-label="${meaning}"
+            >
+              <span>${value}</span>
+            </button>
+          `;
+        }).join("");
+        return `
+          <article class="question-card">
+            <header>
+              <span class="question-number">${String(overallIndex + 1).padStart(2, "0")}</span>
+            </header>
+            <p>${question.text}</p>
+            <div class="likert-scale">
+              <div class="likert-labels">
+                <span class="likert-extreme">${minLabel}</span>
+                <span class="likert-extreme align-right">${maxLabel}</span>
+              </div>
+              <div class="likert-options" role="group" aria-label="Skala jawaban untuk pertanyaan ${overallIndex + 1}">
+                ${buttons}
+              </div>
+            </div>
+          </article>
+        `;
+      })
+      .join("");
+
+    if (chunkIndicator) {
+      chunkIndicator.textContent = `Bagian ${currentChunk + 1} dari ${TOTAL_CHUNKS}`;
+    }
+    updateControls();
+  }
+
+  function updateControls() {
+    if (prevBtn) {
+      prevBtn.disabled = currentChunk === 0;
+    }
+    if (nextBtn) {
+      const isFinalChunk = currentChunk >= TOTAL_CHUNKS - 1;
+      nextBtn.textContent = isFinalChunk ? "Tampilkan Hasil" : "Pertanyaan Selanjutnya";
+    }
+  }
+
+  function handleSubmit() {
     const firstUnanswered = responses.findIndex((val) => val === 0);
     if (firstUnanswered !== -1) {
       currentChunk = Math.floor(firstUnanswered / CHUNK_SIZE);
@@ -316,66 +404,18 @@ document.addEventListener("DOMContentLoaded", () => {
     renderRecommendations(ranked, recommendationList);
     updateMiniBarsChart(categoryScores, miniBars);
     updateSnapshot(snapshotList, categoryScores);
+    toggleRecommendationVisibility(true);
     document.getElementById("rekomendasi")?.scrollIntoView({ behavior: "smooth" });
-  });
+  }
 
-  scrollCtas.forEach((cta) => {
-    cta.addEventListener("click", () => {
-      const target = document.querySelector(cta.dataset.scrollTarget);
-      if (target) target.scrollIntoView({ behavior: "smooth" });
-    });
-  });
-
-  initThemeToggle(themeToggle);
-  initMobileNav({
-    toggle: navToggle,
-    menu: mobileMenu,
-    backdrop: mobileBackdrop,
-    closeBtn: closeMobile,
-  });
-
-  function renderChunk() {
-    if (!questionContainer) return;
-    const start = currentChunk * CHUNK_SIZE;
-    const chunk = QUESTION_BANK.slice(start, start + CHUNK_SIZE);
-    questionContainer.innerHTML = chunk
-      .map((question, index) => {
-        const overallIndex = start + index;
-        const currentValue = responses[overallIndex];
-        const buttons = SCALE_LABELS.map((label, idx) => {
-          const value = idx + 1;
-          const isActive = currentValue === value ? "active" : "";
-          return `
-            <button
-              type="button"
-              class="scale-btn ${isActive}"
-              data-index="${overallIndex}"
-              data-value="${value}"
-            >
-              <small>${label}</small>
-              <span>${value}</span>
-            </button>
-          `;
-        }).join("");
-        return `
-          <article class="question-card">
-            <header>
-              <span class="question-number">${String(overallIndex + 1).padStart(2, "0")}</span>
-              <span class="category-pill">${formatCategory(question.category)}</span>
-            </header>
-            <p>${question.text}</p>
-            <div class="likert-row" role="group" aria-label="Skala jawaban untuk pertanyaan ${overallIndex + 1}">
-              ${buttons}
-            </div>
-          </article>
-        `;
-      })
-      .join("");
-
-    if (chunkIndicator) {
-      chunkIndicator.textContent = `Bagian ${currentChunk + 1} dari ${Math.ceil(
-        QUESTION_BANK.length / CHUNK_SIZE
-      )}`;
+  function toggleRecommendationVisibility(showResults) {
+    if (!recommendationWrap || !recommendationPlaceholder) return;
+    if (showResults) {
+      recommendationWrap.classList.remove("is-hidden");
+      recommendationPlaceholder.classList.add("is-hidden");
+    } else {
+      recommendationWrap.classList.add("is-hidden");
+      recommendationPlaceholder.classList.remove("is-hidden");
     }
   }
 
@@ -441,7 +481,6 @@ function renderRecommendations(list, container) {
           <div class="tag-list">
             ${club.tags.map((tag) => `<span class="tag">#${tag}</span>`).join("")}
           </div>
-          <button class="primary-btn" type="button">Gabung</button>
         </article>
       `
     )
@@ -535,18 +574,27 @@ function formatCategory(key = "") {
   return key || "—";
 }
 
-function initThemeToggle(button) {
-  if (!button) return;
-  const current = document.documentElement.getAttribute("data-theme") || "light";
-  button.textContent = current === "dark" ? "Mode Terang" : "Mode Gelap";
+function initThemeToggle(buttons) {
+  const toggleButtons = Array.from(buttons || []).filter(Boolean);
+  if (!toggleButtons.length) return;
 
-  button.addEventListener("click", () => {
-    const existing = document.documentElement.getAttribute("data-theme") || "light";
-    const next = existing === "dark" ? "light" : "dark";
-    document.documentElement.setAttribute("data-theme", next);
-    localStorage.setItem(THEME_KEY, next);
-    button.textContent = next === "dark" ? "Mode Terang" : "Mode Gelap";
+  const updateLabels = () => {
+    const theme = document.documentElement.getAttribute("data-theme") || "light";
+    const label = theme === "dark" ? "Aktifkan mode terang" : "Aktifkan mode gelap";
+    toggleButtons.forEach((btn) => btn.setAttribute("aria-label", label));
+  };
+
+  toggleButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const existing = document.documentElement.getAttribute("data-theme") || "light";
+      const next = existing === "dark" ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", next);
+      localStorage.setItem(THEME_KEY, next);
+      updateLabels();
+    });
   });
+
+  updateLabels();
 }
 
 function initMobileNav({ toggle, menu, backdrop, closeBtn }) {

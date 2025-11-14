@@ -34,7 +34,13 @@
         <li><a href="#semua">Semua Eskul</a></li>
         <li><a href="#footer">Kontak</a></li>
       </ul>
-      <button class="primary-btn nav-cta" data-scroll-target="#wizard">Mulai Tes</button>
+      <div class="nav-actions">
+        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Aktifkan mode gelap">
+          <span class="theme-icon sun" aria-hidden="true">☀️</span>
+          <span class="theme-icon moon" aria-hidden="true">🌙</span>
+        </button>
+        <button class="primary-btn nav-cta" data-scroll-target="#wizard">Mulai Tes</button>
+      </div>
     </nav>
     <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
       <div class="mobile-menu-inner">
@@ -46,6 +52,10 @@
           <li><a href="#semua">Semua Eskul</a></li>
           <li><a href="#footer">Kontak</a></li>
         </ul>
+        <button class="theme-toggle mobile-theme-toggle" id="themeToggleMobile" type="button" aria-label="Aktifkan mode gelap">
+          <span class="theme-icon sun" aria-hidden="true">☀️</span>
+          <span class="theme-icon moon" aria-hidden="true">🌙</span>
+        </button>
         <button class="primary-btn" data-scroll-target="#wizard">Mulai Tes</button>
       </div>
     </div>
@@ -69,32 +79,31 @@
         <div class="hero-actions">
           <button class="primary-btn" data-scroll-target="#wizard">Mulai Pilih Eskul</button>
           <a class="ghost-btn" href="#semua">Lihat Semua Eskul</a>
-          <button class="ghost-btn" id="themeToggle" type="button">Mode Gelap</button>
         </div>
-        <ul class="hero-highlights">
-          <li>
-            <span>🎯</span>
-            <div>
-              <p class="title">Ranking Personal</p>
-              <p>Kombinasi skor prestasi dan kecocokan minat.</p>
-            </div>
-          </li>
-          <li>
-            <span>🗓️</span>
-            <div>
-              <p class="title">Match Jadwal</p>
-              <p>Filter jadwal sore & akhir pekan otomatis.</p>
-            </div>
-          </li>
-          <li>
-            <span>🚀</span>
-            <div>
-              <p class="title">Roadmap Tujuan</p>
-              <p>Set goal pribadi dan dapatkan tips aksi.</p>
-            </div>
-          </li>
-        </ul>
       </div>
+      <ul class="hero-highlights hero-highlights--column">
+        <li>
+          <span>🎯</span>
+          <div>
+            <p class="title">Ranking Personal</p>
+            <p>Kombinasi skor prestasi dan kecocokan minat.</p>
+          </div>
+        </li>
+        <li>
+          <span>🗓️</span>
+          <div>
+            <p class="title">Match Jadwal</p>
+            <p>Filter jadwal sore & akhir pekan otomatis.</p>
+          </div>
+        </li>
+        <li>
+          <span>🚀</span>
+          <div>
+            <p class="title">Roadmap Tujuan</p>
+            <p>Set goal pribadi dan dapatkan tips aksi.</p>
+          </div>
+        </li>
+      </ul>
     </header>
 
     <section class="about-section" id="about">
@@ -167,11 +176,10 @@
             </div>
             <div id="questionContainer" class="question-stack"></div>
             <div class="quiz-controls">
-              <button type="button" class="ghost-btn" data-action="prev">Pertanyaan Sebelumnya</button>
-              <div class="control-right">
-                <button type="button" class="ghost-btn" data-action="next">Pertanyaan Selanjutnya</button>
-                <button type="button" class="primary-btn" data-action="submit">Hitung Ranking</button>
-              </div>
+              <button type="button" class="ghost-btn control-btn" data-action="prev">Pertanyaan Sebelumnya</button>
+              <button type="button" class="primary-btn control-btn control-btn--primary" data-action="next">
+                Pertanyaan Selanjutnya
+              </button>
             </div>
           </div>
         </div>
@@ -183,7 +191,12 @@
           <h2>Rekomendasi versi kamu</h2>
           <p>Skor dihitung dari jawaban 50 pernyataan + data kekuatan tiap eskul. Semakin tinggi skor, semakin cocok.</p>
         </div>
-        <div class="recommendation-wrap">
+        <div class="recommendation-placeholder" id="recommendationPlaceholder">
+          <p class="placeholder-emoji">😴</p>
+          <p class="placeholder-title">Belum ada skor</p>
+          <p class="placeholder-copy">Jawab semua pernyataan lalu klik <strong>Hitung Ranking</strong> untuk membuka rekomendasi.</p>
+        </div>
+        <div class="recommendation-wrap is-hidden">
           <div class="recommendation-list" id="recommendationList" aria-live="polite">
             <div class="empty-state">
               <p>Belum ada skor 😴</p>
@@ -225,25 +238,15 @@
     </main>
 
     <footer class="site-footer" id="footer">
-      <div>
-        <p class="footer-title">My Eskulas</p>
-        <p>Inisiatif siswa PPLG Rolas untuk bantu adik kelas memilih eskul di SMKN 12 Surabaya.</p>
+      <div class="footer-brand">
+        <img src="logo smkn 12.png" alt="Logo SMKN 12 Surabaya" class="footer-logo" />
+        <div>
+          <p class="footer-title">My Eskulas</p>
+          <p>Inisiatif siswa PPLG Rolas untuk bantu adik kelas memilih eskul di SMKN 12 Surabaya.</p>
+        </div>
       </div>
-      <div>
-        <p class="footer-title">Kontak Sekolah</p>
-        <ul>
-          <li>Jl. Siwalankerto Permai 1, Surabaya</li>
-          <li>Telp (031) 8481644</li>
-          <li>Email humas@smkn12surabaya.sch.id</li>
-        </ul>
-      </div>
-      <div>
-        <p class="footer-title">Ikuti Kami</p>
-        <ul class="social-links">
-          <li><a href="#">Instagram OSIS</a></li>
-          <li><a href="#">YouTube Eskul TV</a></li>
-          <li><a href="#">TikTok Rolas Squad</a></li>
-        </ul>
+      <div class="footer-meta">
+        <p>© 2025 SMKN 12 Surabaya - PPLG SMKN 12 Surabaya. Seluruh hak cipta dilindungi.</p>
       </div>
     </footer>
 
