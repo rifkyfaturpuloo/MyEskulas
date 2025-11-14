@@ -102,7 +102,7 @@ const CLUBS = [
   },
   {
     id: "dance",
-    name: "Dance SMKN 12 Surabaya",
+    name: "Dancer SMKN 12 Surabaya",
     nickname: "Winzhy",
     description: "Crew dance modern dengan koreografi kompetisi dan konten digital.",
     highlight: "Koreografi panggung & konten.",
@@ -128,7 +128,7 @@ const CLUBS = [
   },
   {
     id: "psht",
-    name: "Persaudaraan Setia Hati Terate",
+    name: "Persaudaraan Setia Hati Terate SMKN 12 Surabaya",
     nickname: "PSHT Rolas",
     description: "Latihan bela diri tradisional dengan fokus etika dan ketahanan fisik.",
     highlight: "Balance antara teknik dan filosofi.",
@@ -141,7 +141,7 @@ const CLUBS = [
   },
   {
     id: "pn",
-    name: "Pagar Nusa SMKN 12",
+    name: "Pencak Silat Nahdlatul Ulama Pagar Nusa SMKN 12 Surabaya",
     nickname: "PN Rolas",
     description: "Unit pencak silat bernuansa spiritual dan budaya Nahdlatul Ulama.",
     highlight: "Memadukan bela diri & nilai spiritual.",
